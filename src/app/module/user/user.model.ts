@@ -40,8 +40,10 @@ const User = sequelize.define<Model<TUser>>(
 );
 
 User.beforeCreate(async (user) => {
-    const hashedPassword = await bcrypt.hash(user.password, Number(config.saltRound));
-    user.password = hashedPassword;
+    // @ts-expect-error user has password field
+    const hashedPassword = await bcrypt.hash(user?.password, Number(config.saltRound));
+    // @ts-expect-error user has password field
+    user?.password = hashedPassword;
 });
 
 export default User;

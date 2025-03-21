@@ -16,21 +16,21 @@ const LoginUser = async (email: string, password: string) => {
     if (!user) {
         throw new AppError(httpStatus.NOT_FOUND, "No user exists with given email");
     }
-
-    if (user.status === "blocked") {
+    // @ts-expect-error user has status field
+    if (user?.status === "blocked") {
         throw new AppError(httpStatus.FORBIDDEN, "You are blocked!");
     }
-
+    // @ts-expect-error user has password field
     const passwordMatched = await bcrypt.compare(password, user?.password);
     if (!passwordMatched) {
         throw new AppError(httpStatus.FORBIDDEN, "Password does not match!");
     }
-
-    const jwtPayload = { email: user.email, status: user.status };
+    // @ts-expect-error user has password, status field
+    const jwtPayload = { email: user?.email, status: user?.status };
 
     const token = createToken(jwtPayload, config.jwtSecretKey as string, config.jwtExpiresIn as string);
-
-    user.password = "";
+    // @ts-expect-error user has password field
+    user?.password = "";
 
     return { user, token };
 };

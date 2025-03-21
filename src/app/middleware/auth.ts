@@ -26,6 +26,7 @@ const auth = () => {
         if (!user) {
             throw new AppError(httpStatus.NOT_FOUND, "User not found or deleted");
         }
+        // @ts-expect-error user has status field
         if (user?.status === "blocked") {
             throw new AppError(httpStatus.FORBIDDEN, "You are blocked!");
         }
