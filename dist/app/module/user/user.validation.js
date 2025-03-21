@@ -8,7 +8,7 @@ const createUserValidationSchema = zod_1.z.object({
         .trim()
         .min(3, { message: "Name must must be minimum 3 characters" })
         .max(20, { message: "Name can not be more than 20 characters" }),
-    company: zod_1.z.string().max(30, { message: "Comapny can not be more than 20 characters" }).optional(),
+    company: zod_1.z.string().max(50, { message: "Comapny can not be more than 50 characters" }).optional(),
     email: zod_1.z.string().email(),
     password: zod_1.z
         .string()
